@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reports - CloudBased Expense Tracker</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/dashboard.css" />
+  <link rel="stylesheet" href="../assets/css/report.css" />
+  <link rel="stylesheet" href="../assets/css/responsive.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="../assets/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+      fetch('./components/sidebar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('sidebar').innerHTML = data;
+          const activeLink = document.querySelector(`.sidebar-link[href*="reports"]`);
+          if (activeLink) activeLink.classList.add('active');
+        })
+        .catch(error => console.error('Error loading sidebar:', error));
+
+      document.querySelector('.toggle-sidebar').addEventListener('click', () => {
+        document.querySelector('.app-container').classList.toggle('sidebar-collapsed');
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="app-container">
+    <nav class="sidebar" id="sidebar"></nav>
+   
+    <div class="main-content">
+      <div class="topbar">
+        <div class="toggle-sidebar"><i class="fas fa-bars"></i></div>
+        <div class="user-info">
+          <div class="user-profile">
+            <span id="user-name">Loading...</span>
+            <div class="avatar" id="user-avatar">...</div>
+          </div>
+        </div>
+      </div>
+     
+      <header class="page-header">
+        <h1>Financial Report</h1>
+        <p>Analyze your financial report</p>
+      </header>
+
+      <div class="dashboard-grid">
+        <div class="card summary-card">
+          <div class="card-header">
+            <h3>Expense Summary</h3>
+          </div>
+          <div class="card-body">
+            <div class="metric">
+              <div class="metric-value" id="total-expenses">0.00</div>
+              <div class="metric-label">Total Expenses</div>
+            </div>
+            <div class="metrics-grid">
+              <div class="metric">
+                <div class="metric-value" id="avg-daily">0.00</div>
+                <div class="metric-label">Daily Average</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value" id="highest-category">-</div>
+                <div class="metric-label">Highest Category</div>
+              </div>
+              <div class="metric">
+                <div class="metric-value" id="expense-count">0</div>
+                <div class="metric-label">Transactions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Expense Breakdown by Category</h3>
+          </div>
+          <div class="card-body chart-container">
+            <canvas id="reportChart" style="width:100%; height:300px;"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Spending</h3>
+          </div>
+          <div class="card-body chart-container">
+            <canvas id="trendChart" style="width:100%; height:300px;"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3>Daily/Wekkly/Monthly/Yearly Transactions</h3>
+          </div>
+
+          <div class="filter-container">
+            <label for="filter-date">Select Date:</label>
+            <input type="date" id="filter-date">
+
+            <label for="filter-month">Select Month:</label>
+            <input type="month" id="filter-month">
+
+            <label for="filter-year">Select Year:</label>
+            <input type="number" id="filter-year" min="2000" max="2100" placeholder="YYYY">
+
+            <button id="apply-filters" class="btn btn-primary">Apply Filters</button>
+          </div>
+
+          <div class="card-body">
+            <h3>If you want to filter by month then you have to specify year, ("In that You can ignore date")</h3>
+            <div class="table-responsive">
+              <table class="data-table" id="expenses-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Total Spent</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Data will be dynamically loaded here -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-buttons">
+              <button id="export-pdf" class="btn btn-primary"><i class="fas fa-file-pdf"></i> Export PDF</button>
+              <button id="export-csv" class="btn btn-outline"><i class="fas fa-file-csv"></i> Export CSV</button>
+              <button id="clear-filters" class="btn btn-secondary"><i class="fas fa-times"></i> Clear Filters</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="../assets/js/report.js"></script>
+  <script>
+    alert("✅ User stored in localStorage:"+ localStorage.getItem('user'));
+  </script>
+</body>
+</html>

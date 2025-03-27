@@ -71,4 +71,5 @@ jobs:
           app-name: 'test-apps'
           slot-name: 'Production'
           package: .
+          startup-command: 'npm start'
           

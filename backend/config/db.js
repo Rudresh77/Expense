@@ -5,17 +5,17 @@ require('dotenv').config(); // Load environment variables from .env file
 const sql = require('mssql');
 
 // Debug missing environment variables
-if (!process.env.DB_SERVER) console.error("❌ Missing DB_SERVER in .env file");
-if (!process.env.DB_USER) console.error("❌ Missing DB_USER in .env file");
-if (!process.env.DB_PASSWORD) console.error("❌ Missing DB_PASSWORD in .env file");
-if (!process.env.DB_DATABASE) console.error("❌ Missing DB_DATABASE in .env file");
+// if (!process.env.DB_SERVER) console.error("❌ Missing DB_SERVER in .env file");
+// if (!process.env.DB_USER) console.error("❌ Missing DB_USER in .env file");
+// if (!process.env.DB_PASSWORD) console.error("❌ Missing DB_PASSWORD in .env file");
+// if (!process.env.DB_DATABASE) console.error("❌ Missing DB_DATABASE in .env file");
 
 // Azure SQL configuration using environment variables
 const config = {
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  server: process.env.DB_SERVER,
-  database: process.env.DB_DATABASE,
+ user: process.env.AZURE_SQL_USERNAME,
+  password: process.env.AZURE_SQL_PASSWORD,
+  server: process.env.AZURE_SQL_SERVER,
+  database: process.env.AZURE_SQL_DATABASE,
   options: {
     encrypt: true, // Use encryption for Azure SQL
     trustServerCertificate: false,

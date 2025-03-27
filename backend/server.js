@@ -13,7 +13,7 @@ const reportRoutes = require('./routes/reportRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 
 const app = express();
-const PORT = process.env.AZURE_SQL_PORT || 5000;
+const PORT = process.env.AZURE_SQL_PORT ||80;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

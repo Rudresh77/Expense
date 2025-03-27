@@ -119,7 +119,7 @@ app.use((req, res, next) => {
 //   } catch (error) {
 //     console.error("Error initializing database tables:", error);
 //   }
-}
+//}
 
 
 // initializeDatabase();
